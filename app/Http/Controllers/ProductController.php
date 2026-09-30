@@ -31,11 +31,18 @@ class ProductController extends Controller
     {
         $product = $this->service->store($request->validated());
 
-       return new ProductResource( $product);
+       return new ProductResource($product);
+    }
+
+    public function update(StoreProductRequest $request, int $id) 
+    {
+        $product = $this->service->update($id, $request->validated());
+
+       return new ProductResource($product);
     }
 
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
 
         $this->service->destroy($id); 

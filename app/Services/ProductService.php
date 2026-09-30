@@ -53,6 +53,17 @@ class ProductService
         return $product;
     }
 
+    public function update(int $id, array $productDataNew)
+    {
+        $product = $this->repository->update($id, $productDataNew);
+
+        $product->stock_status = $product->quantity > 0
+        ? 'in_stock'
+        : 'out_of_stock';
+
+        return $product;
+    }
+
     public function destroy(int $id)
     {
         return $this->repository->destroy($id);

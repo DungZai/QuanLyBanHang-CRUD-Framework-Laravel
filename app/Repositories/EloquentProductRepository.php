@@ -26,9 +26,18 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
 
     #[Override]
-    public function store(array $productData)
+    public function store(array $productData): Product
     {
         return Product::create($productData);
+    }
+
+    public function update(int $id, array $productDataNew): Product
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update($productDataNew);
+
+        return $product;
     }
 
     #[Override]

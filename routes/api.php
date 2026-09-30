@@ -17,7 +17,7 @@ Route::get('/products', [ProductController::class, 'index']);
 Route::post('/products',[ProductController::class, 'store'])
 ->middleware(CheckAdmin::class);
 
-Route::put('/products',[ProductController::class, 'update'])
+Route::put('/products/{id}',[ProductController::class, 'update'])
 ->middleware(CheckAdmin::class);
 
 Route::delete('/products/{id}',[ProductController::class, 'destroy'])
@@ -31,7 +31,7 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/categories',[CategoryController::class, 'store'])
 ->middleware(CheckAdmin::class);
 
-Route::put('/categories',[CategoryController::class, 'update'])
+Route::put('/categories/{id}',[CategoryController::class, 'update'])
 ->middleware(CheckAdmin::class);
 
 Route::delete('/categories/{id}',[CategoryController::class, 'destroy'])

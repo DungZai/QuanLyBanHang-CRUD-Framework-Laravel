@@ -10,7 +10,9 @@ interface ProductRepositoryInterface
     
     public function getActiveProducts();
 
-    public function store(array $productData);
+    public function store(array $productData): Product;
+
+    public function update(int $id, array $productDataNew): Product;
 
     public function destroy(int $id): bool;
 }
