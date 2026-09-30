@@ -3,42 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    Private ProductService $service;
+    private ProductService $service;
     public function __construct(ProductService $service)
     {
         $this->service = $service;
     }
 
-    public function showProduct($id)
+    public function show($id)
     {
-        return response()->json($this->service->getProduct($id));
+        $product = $this->service->getProduct($id);
+        return new ProductResource($product);
     }
 
-    public function showActiveProduct()
+    public function index()
     {
-        return response()->json($this->service->getActiveProducts());
-    }
-
-
-    public function createProduct(StoreProductRequest $request) 
-    {
-        $product = $this->service->createProduct($request->validated());
-
-        return response()->json([
-        'message' => 'Thêm thành công!',
-        'data'    => $product,
-    ], 201);
+        $product = $this->service->getActiveProducts();
+        return ProductResource::collection($product);
     }
 
 
-    public function deleteProduct($id)
+    public function store(StoreProductRequest $request) 
+    {
+        $product = $this->service->store($request->validated());
+
+       return new ProductResource( $product);
+    }
+
+
+    public function destroy($id)
     {
 
-        $this->service->deleteProduct($id); 
+        $this->service->destroy($id); 
 
         return response()->json([
             'message' => 'Xóa thành công!',

@@ -6,11 +6,11 @@ use App\Models\Product;
 
 interface ProductRepositoryInterface
 {
-    public function findById($id): Product;
+    public function findById(int $id): Product;
     
     public function getActiveProducts();
 
-    public function createProduct(array $productData);
+    public function store(array $productData);
 
-    public function deleteProduct(int $id): bool;
+    public function destroy(int $id): bool;
 }

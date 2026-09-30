@@ -17,34 +17,44 @@ class ProductService
         $this->repository = $repository;
     }
 
+
     public function getProduct(int $id)
     {
         $product = $this->repository->findById($id);
+
         $product->stock_status = $product->quantity > 0
         ? 'in_stock'
-        : 'out_stock';
+        : 'out_of_stock';
+
         return $product;
-       
     }
 
     public function getActiveProducts()
     {
         $products = $this->repository->getActiveProducts();
+
         foreach($products as $product) {
             $product->stock_status = $product->quantity > 0
             ? 'in_stock'
-            : 'out_stock';
+            : 'out_of_stock';
         }
+
         return $products;
     }
 
-    public function createProduct(array $productData)
+    public function store(array $productData)
     {
-        return $this->repository->createProduct($productData);
+        $product = $this->repository->store($productData);
+
+        $product->stock_status = $product->quantity > 0
+        ? 'in_stock'
+        : 'out_of_stock';
+
+        return $product;
     }
 
-    public function deleteProduct(int $id)
+    public function destroy(int $id)
     {
-        return $this->repository->deleteProduct($id);
+        return $this->repository->destroy($id);
     }
 }

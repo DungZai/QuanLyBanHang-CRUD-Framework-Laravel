@@ -26,13 +26,13 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
 
     #[Override]
-    public function createProduct(array $productData)
+    public function store(array $productData)
     {
         return Product::create($productData);
     }
 
     #[Override]
-    public function deleteProduct(int $id): bool
+    public function destroy(int $id): bool
     {
         $product = Product::findOrFail($id);
 
