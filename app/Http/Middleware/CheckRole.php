@@ -13,11 +13,17 @@ class CheckRole
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role): Response
+    public function handle(Request $request, Closure $next, ...$roles): Response
     {
         $user = auth('api')->user();
         
-        if (!in_array($user->role, $role)) {
+        if (!$user) {
+            return response()->json([
+                'message' => 'Chưa xác thực',
+            ], 401);
+        }
+
+        if (!in_array($user->role, $roles)) {
             return response()->json([
                 'message' => 'Bạn không có quyền truy cập',
             ], 403);

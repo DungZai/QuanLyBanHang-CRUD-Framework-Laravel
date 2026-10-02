@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportStockRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
@@ -44,11 +45,36 @@ class ProductController extends Controller
 
     public function destroy(int $id)
     {
-
         $this->service->destroy($id); 
 
         return response()->json([
             'message' => 'Xóa thành công!',
         ],200);
+    }
+
+
+    public function import(int $id, ImportStockRequest $request)
+    {
+        $quantityData = $request->integer('quantity');
+
+        $product = $this->service->import($id, $quantityData);
+            
+        return new ProductResource($product);
+    }     
+    
+    
+    public function export(int $id, ImportStockRequest $request)
+    {
+        $quantityData = $request->integer('quantity');
+
+        $product = $this->service->export($id, $quantityData);
+
+        if (!$product) {
+            return response()->json([
+                'message' => "Số lượng không đủ để xuất kho",
+            ], 422);
+        }
+        
+        return new ProductResource($product);
     }
 }

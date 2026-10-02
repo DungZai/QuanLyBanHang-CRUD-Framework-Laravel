@@ -47,4 +47,28 @@ class EloquentProductRepository implements ProductRepositoryInterface
 
         return $product->delete();
     }
+
+    #[Override]
+    public function import(int $id, int $newQuantity): Product
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'quantity' => $newQuantity,
+        ]);
+
+        return $product;
+    }
+
+    #[Override]
+    public function export(int $id, int $remainingQuantity): Product
+    {
+        $product = Product::findOrFail($id);
+
+        $product->update([
+            'quantity' => $remainingQuantity,
+        ]);
+
+        return $product;
+    }
 }

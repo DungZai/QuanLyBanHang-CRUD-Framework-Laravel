@@ -15,4 +15,8 @@ interface ProductRepositoryInterface
     public function update(int $id, array $productDataNew): Product;
 
     public function destroy(int $id): bool;
+
+    public function import(int $id, int $quantityData): Product;
+
+    public function export(int $id, int $exportQuantity): Product;
 }

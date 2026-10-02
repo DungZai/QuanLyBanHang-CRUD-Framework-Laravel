@@ -68,4 +68,29 @@ class ProductService
     {
         return $this->repository->destroy($id);
     }
+
+    public function import(int $id, int $quantityData)
+    {
+        $product = $this->repository->findById($id);
+
+        $newQuantity = $product->quantity + $quantityData;
+
+        $product = $this->repository->import($id, $newQuantity);
+        return $product;
+    }
+
+    public function export(int $id, int $exportQuantity)
+    {
+        $product = $this->repository->findById($id);
+
+        if ($product->quantity < $exportQuantity) {
+            return;
+        }
+        
+        $remainingQuantity = $product->quantity - $exportQuantity;
+
+        $product = $this->repository->export($id, $remainingQuantity);
+
+        return $product;
+    }
 }
