@@ -9,10 +9,19 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Override;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+#[Fillable(['name', 
+            'email', 
+            'password',
+            'role',
+            'status',
+            'email_verified_at',
+            ])]
+
+#[Hidden(['password', 'remember_token'])] //phần này khi resource được in ra thì nó sẽ không có
+class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -22,11 +31,27 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => 'boolean',
         ];
     }
+
+    #[Override]
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    #[Override]
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+
 }

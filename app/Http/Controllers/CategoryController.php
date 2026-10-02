@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = $this->service->getCategory();
 
-        return CategoryResource::collection( $categories);
+        return CategoryResource::collection($categories);
     }
 
     public function show(int $id)

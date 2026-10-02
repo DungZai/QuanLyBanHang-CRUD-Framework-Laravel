@@ -9,7 +9,7 @@ class EloquentCategoryRepository implements CategoryRepositoryInterface
 {
     public function getCategory()
     {
-        return Category::all();
+        return Category::with('products')->get();
     }
 
     public function findById(int $id): Category

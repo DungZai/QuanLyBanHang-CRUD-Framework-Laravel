@@ -42,7 +42,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        //đoạn này mình thêm vào dự trên JWT
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
     ],
+
+    
 
     /*
     |--------------------------------------------------------------------------

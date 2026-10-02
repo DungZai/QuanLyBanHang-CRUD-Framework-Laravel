@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Contracts\CategoryRepositoryInterface;
 use App\Contracts\ProductRepositoryInterface;
+use App\Contracts\UserRepositoryInterface;
 use App\Repositories\EloquentCategoryRepository;
 use App\Repositories\EloquentProductRepository;
+use App\Repositories\EloquentUserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CategoryRepositoryInterface::class,
             EloquentCategoryRepository::class
+        );
+
+        $this->app->bind(
+            UserRepositoryInterface::class,
+            EloquentUserRepository::class
         );
     }
 
