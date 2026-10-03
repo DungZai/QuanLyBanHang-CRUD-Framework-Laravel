@@ -13,7 +13,7 @@ class EloquentProductRepository implements ProductRepositoryInterface
      */
 
     #[Override]
-    public function findById($id): Product
+    public function findById(int $id): Product
     {
        return Product::findOrFail($id);
     }

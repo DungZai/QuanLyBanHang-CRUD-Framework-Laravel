@@ -17,6 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
         ]);
+
+        //đoạn này được thêm vào để khi null, không gửi về login
+        $middleware->redirectGuestsTo(
+        fn (Request $request) => $request->is('api/*') ? null : route('login')
+    );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

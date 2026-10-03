@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,20 +13,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->get('/me', [AuthController::class, 'me']);
 
+Route::middleware('auth:api')->post('/logout',[AuthController::class, 'logout']);
 
-Route::middleware('auth:api')->get('/products/{id}', [ProductController::class, 'show']);
 
-Route::middleware('auth:api')->get('/products', [ProductController::class, 'index']);
-
-Route::middleware(['auth:api', 'role:admin,staff'])->post('/products', [ProductController::class, 'store']);
-
-Route::middleware(['auth:api', 'role:admin,staff'])->put('/products/{id}', [ProductController::class, 'update']);
-
-Route::middleware(['auth:api', 'role:admin'])->delete('/products/{id}', [ProductController::class, 'destroy']);
-
-Route::post('/products/{id}/inventory/import', [ProductController::class, 'import']);
-
-Route::post('/products/{id}/inventory/export', [ProductController::class, 'export']);
 
 Route::middleware('auth:api')->get('/categories/{id}', [CategoryController::class, 'show']);
 
@@ -38,5 +28,22 @@ Route::middleware(['auth:api', 'role:admin,staff'])->put('/categories/{id}',[Cat
 Route::middleware(['auth:api', 'role:admin'])->delete('/categories/{id}', [CategoryController::class, 'destroy']);
 
 
-Route::middleware('auth:api')->post('/logout',[AuthController::class, 'logout']);
+
+
+Route::middleware('auth:api')->get('/products/{id}', [ProductController::class, 'show']);
+
+Route::middleware('auth:api')->get('/products', [ProductController::class, 'index']);
+
+Route::middleware(['auth:api', 'role:admin,staff'])->post('/products', [ProductController::class, 'store']);
+
+Route::middleware(['auth:api', 'role:admin,staff'])->put('/products/{id}', [ProductController::class, 'update']);
+
+Route::middleware(['auth:api', 'role:admin'])->delete('/products/{id}', [ProductController::class, 'destroy']);
+
+Route::middleware(['auth:api', 'role:admin,staff'])->post('/products/{id}/inventory/import', [ProductController::class, 'import']);
+
+Route::middleware(['auth:api', 'role:admin,staff'])->post('/products/{id}/inventory/export', [ProductController::class, 'export']);
+
+
+Route::middleware('auth:api')->post('/orders', [OrderController::class,'store']);
 
